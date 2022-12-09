@@ -2,6 +2,8 @@ import java.awt.*;
 import java.awt.event.*;
 import java.util.*;
 import javax.swing.*;
+import java.util.Random;
+import java.util.ArrayList;
 
 public class TicTacToe implements ActionListener{
 
@@ -9,26 +11,38 @@ public class TicTacToe implements ActionListener{
     JFrame frame = new JFrame();
     JPanel title_panel = new JPanel();
     JPanel button_panel = new JPanel();
+    JPanel name_panel = new JPanel();
     JLabel textfield = new JLabel();
+    JLabel name = new JLabel();
     JButton[] buttons = new JButton[9];
     boolean player1_turn;
+    boolean bot;
 
     TicTacToe(){
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(800, 800);
         frame.getContentPane().setBackground(new Color(50,50,50));
         frame.setLayout(new BorderLayout());
-        frame.setVisible(true);
 
         textfield.setBackground(new Color(25, 25, 25));
         textfield.setForeground(new Color(25, 255, 0));
-        textfield.setFont(new Font("Ink Free", Font.BOLD, 75));
+        textfield.setFont(new Font("Times", Font.BOLD, 75));
         textfield.setHorizontalAlignment(JLabel.CENTER);
         textfield.setText("Tic-Tac-Toe");
         textfield.setOpaque(true);
 
+        name.setBackground(new Color(25, 25, 25));
+        name.setForeground(new Color(25, 255, 0));
+        name.setFont(new Font("Times", Font.BOLD, 20));
+        name.setHorizontalAlignment(JLabel.RIGHT);
+        name.setText(someNames.get(random.nextInt(23)));
+        name.setOpaque(true);
+
         title_panel.setLayout(new BorderLayout());
         title_panel.setBounds(0, 0, 800, 100);
+
+        name_panel.setLayout(new BorderLayout());
+        name_panel.setBounds(500, 0, 300, 100);
 
         button_panel.setLayout(new GridLayout(3,3));
         button_panel.setBackground(new Color(150, 150, 150));
@@ -36,7 +50,7 @@ public class TicTacToe implements ActionListener{
         for(int i = 0; i < 9; i++){
             buttons[i] = new JButton();
             button_panel.add(buttons[i]);
-            buttons[i].setFont(new Font("MV Boli", Font.BOLD, 120));
+            buttons[i].setFont(new Font("Times", Font.BOLD, 120));
             buttons[i].setFocusable(false);
             buttons[i].addActionListener(this);
         }
@@ -45,9 +59,41 @@ public class TicTacToe implements ActionListener{
         frame.add(title_panel, BorderLayout.NORTH);
         frame.add(button_panel);
 
-        firstTurn();
+        name_panel.add(name);
+        frame.add(name_panel, BorderLayout.SOUTH);
+        
+        frame.setVisible(true);
 
+        start();
     }
+
+    ArrayList<String> someNames = new ArrayList<String>() {
+      {
+         add("dulcify");
+         add("whirlaway");
+         add("gumshoe");
+         add("skipteaser");
+         add("kissed by a fish");
+         add("rakatack");
+         add("viscosity");
+         add("flattermeforever");
+         add("sonneteer");
+         add("cigar starter");
+         add("flat out fast");
+         add("gothic soldier");
+         add("sexy librarian");
+         add("fishy advice");
+         add("motel princess");
+         add("lunatique");
+         add("panicking petunia");
+         add("wingspan");
+         add("southern missle");
+         add("excessive moves");
+         add("paul bunyans axe");
+         add("a storm it is");
+         add("dawn of war");
+      }
+   };
 
     @Override
     public void actionPerformed(ActionEvent e) {
@@ -77,23 +123,6 @@ public class TicTacToe implements ActionListener{
         
     }
 
-    public void firstTurn(){
-        try {
-            Thread.sleep(2000);
-        } catch (InterruptedException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-        
-        if (random.nextInt(2) == 0){
-            player1_turn = true;
-            textfield.setText("X Turn");
-        } else {
-            player1_turn = false;
-            textfield.setText("O Turn");
-        }
-
-    }
 
     public void check(){
         if((buttons[0].getText() == "X") &&
@@ -201,7 +230,53 @@ public class TicTacToe implements ActionListener{
             buttons[i].setEnabled(false);
         }
         textfield.setText("O Wins");
+        
+    }
+
+    public void start() {
+        String s = (String)JOptionPane.showInputDialog(new JFrame(),
+               "O / X?",
+               "Pick Your Team",
+               JOptionPane.PLAIN_MESSAGE
+             );
+
+            if (s.equals("o") || s.equals("O")){
+                textfield.setText("O Turn");
+                player1_turn = false;
+            } else if (s.equals("x") || s.equals("X")){
+                textfield.setText("X Turn");
+                player1_turn = true;
+            } else {
+                ErrorDialog();
+
+                System.exit(0);
+                
+            }
+
+        
+        String t = (String)JOptionPane.showInputDialog(new JFrame(),
+             "Bot or Player?",
+             JOptionPane.PLAIN_MESSAGE
+           );
+        
+        if (t.equals("Player") || t.equals("player")){
+            bot = false;
+        } else if (t.equals("Bot") || t.equals("bot")){
+            bot = true;
+        } else {
+            ErrorDialog();
+            System.exit(0);
+        }
 
     }
+
+    public void ErrorDialog() {
+        String message = "\"Wrong User Input\"\n"
+            + "Please try and reload\n"
+            + "Thank You!";
+        JOptionPane.showMessageDialog(new JFrame(), message, "Dialog",
+            JOptionPane.ERROR_MESSAGE);
+      }
+
 
 }
