@@ -17,8 +17,6 @@ public class TicTacToe implements ActionListener{
     JButton[] buttons = new JButton[9];
     boolean player1_turn;
     boolean bot;
-    boolean bot_turn;
-    String letter = "";
 
     TicTacToe(){
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -26,25 +24,25 @@ public class TicTacToe implements ActionListener{
         frame.getContentPane().setBackground(new Color(50,50,50));
         frame.setLayout(new BorderLayout());
 
-        textfield.setBackground(new Color(240,128,128));
-        textfield.setForeground(new Color(128,0,0));
+        textfield.setBackground(new Color(25, 25, 25));
+        textfield.setForeground(new Color(25, 255, 0));
         textfield.setFont(new Font("Times", Font.BOLD, 75));
         textfield.setHorizontalAlignment(JLabel.CENTER);
         textfield.setText("Tic-Tac-Toe");
         textfield.setOpaque(true);
 
-        name.setBackground(new Color(255,160,122));
-        name.setForeground(new Color(128,0,0));
-        name.setFont(new Font("Times", Font.BOLD, 40));
-        name.setHorizontalAlignment(JLabel.CENTER);
-        name.setText( "Name: " + someNames.get(random.nextInt(23)));
+        name.setBackground(new Color(25, 25, 25));
+        name.setForeground(new Color(25, 255, 0));
+        name.setFont(new Font("Times", Font.BOLD, 20));
+        name.setHorizontalAlignment(JLabel.RIGHT);
+        name.setText(someNames.get(random.nextInt(23)));
         name.setOpaque(true);
 
         title_panel.setLayout(new BorderLayout());
         title_panel.setBounds(0, 0, 800, 100);
 
         name_panel.setLayout(new BorderLayout());
-        name_panel.setBounds(0, 800, 300, 100);
+        name_panel.setBounds(500, 0, 300, 100);
 
         button_panel.setLayout(new GridLayout(3,3));
         button_panel.setBackground(new Color(150, 150, 150));
@@ -71,45 +69,31 @@ public class TicTacToe implements ActionListener{
 
     ArrayList<String> someNames = new ArrayList<String>() {
       {
-         add("Dulcify");
-         add("Whirlaway");
-         add("Gumshoe");
-         add("Skipteaser");
-         add("Kissed by a fish");
-         add("Rakatack");
-         add("Viscosity");
-         add("Flattermeforever");
-         add("Sonneteer");
-         add("Cigar starter");
-         add("Flat out fast");
-         add("Gothic soldier");
-         add("Sexy librarian");
-         add("Fishy advice");
-         add("Motel princess");
-         add("Lunatique");
-         add("Panicking petunia");
-         add("Wingspan");
-         add("Southern missle");
-         add("Excessive moves");
-         add("Paul bunyans axe");
-         add("A storm it is");
-         add("Dawn of war");
+         add("dulcify");
+         add("whirlaway");
+         add("gumshoe");
+         add("skipteaser");
+         add("kissed by a fish");
+         add("rakatack");
+         add("viscosity");
+         add("flattermeforever");
+         add("sonneteer");
+         add("cigar starter");
+         add("flat out fast");
+         add("gothic soldier");
+         add("sexy librarian");
+         add("fishy advice");
+         add("motel princess");
+         add("lunatique");
+         add("panicking petunia");
+         add("wingspan");
+         add("southern missle");
+         add("excessive moves");
+         add("paul bunyans axe");
+         add("a storm it is");
+         add("dawn of war");
       }
    };
-    ArrayList<Integer> num = new ArrayList<Integer>() {    
-      {
-        add(0);
-        add(1);
-        add(2);
-        add(3);
-        add(4);
-        add(5);
-        add(6);
-        add(7);
-        add(8);
-      }
-    };
-   
 
     @Override
     public void actionPerformed(ActionEvent e) {
@@ -117,58 +101,26 @@ public class TicTacToe implements ActionListener{
 
         for (int i = 0; i < 9; i++){
             if(e.getSource() == buttons[i]){
-                if(bot = false){
-                    if(player1_turn){
-                        if(buttons[i].getText() == ""){
-                            buttons[i].setForeground(new Color(255, 0, 0));
-                            buttons[i].setText("X");
-                            player1_turn = false;
-                            textfield.setText("O Turn");
-                            check();
-                        }
-                    } else {
-                            if(buttons[i].getText() == ""){
-                                buttons[i].setForeground(new Color(0, 0, 255));
-                                buttons[i].setText("O");
-                                player1_turn = true;
-                                textfield.setText("X Turn");
-                                check();
-                            }
+                if(player1_turn){
+                    if(buttons[i].getText() == ""){
+                        buttons[i].setForeground(new Color(255, 0, 0));
+                        buttons[i].setText("X");
+                        player1_turn = false;
+                        textfield.setText("O Turn");
+                        check();
                     }
                 } else {
-                    if(bot_turn){
-                        runBot();
-                    } else {
-                            if(buttons[i].getText() == ""){
-                                buttons[i].setForeground(new Color(0, 0, 255));
-                                buttons[i].setText("O");
-                                bot_turn = true;
-                                textfield.setText("X Turn");
-                                num.remove(i);
-                                check();
-                            }
-                    }
-
+                        if(buttons[i].getText() == ""){
+                            buttons[i].setForeground(new Color(0, 0, 255));
+                            buttons[i].setText("O");
+                            player1_turn = true;
+                            textfield.setText("X Turn");
+                            check();
+                        }
                 }
             }
         }
         
-    }
-    int index = 9;
-    public void runBot(){
-        int choice = num.get(random.nextInt(index)); 
-        if(buttons[choice].getText() == ""){
-            buttons[choice].setForeground(new Color(255, 0, 0));
-            buttons[choice].setText("X");
-            bot_turn = false;
-            textfield.setText("O Turn");
-            check();
-        } else if(buttons[choice].getText() == "X" || buttons[choice].getText() == "O"){
-            num.remove(choice);
-            index --;
-            runBot();
-        }
-        num.remove(choice);
     }
 
 
@@ -289,16 +241,16 @@ public class TicTacToe implements ActionListener{
              );
 
             if (s.equals("o") || s.equals("O")){
-                letter = "O";
                 textfield.setText("O Turn");
-                player1_turn = true;
+                player1_turn = false;
             } else if (s.equals("x") || s.equals("X")){
                 textfield.setText("X Turn");
                 player1_turn = true;
-                letter = "X";
             } else {
                 ErrorDialog();
-                System.exit(0); 
+
+                System.exit(0);
+                
             }
 
         
@@ -311,7 +263,6 @@ public class TicTacToe implements ActionListener{
             bot = false;
         } else if (t.equals("Bot") || t.equals("bot")){
             bot = true;
-
         } else {
             ErrorDialog();
             System.exit(0);
