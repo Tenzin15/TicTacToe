@@ -117,7 +117,7 @@ public class TicTacToe implements ActionListener{
 
         for (int i = 0; i < 9; i++){
             if(e.getSource() == buttons[i]){
-                if(bot = false){
+                if(!bot){
                     if(player1_turn){
                         if(buttons[i].getText() == ""){
                             buttons[i].setForeground(new Color(255, 0, 0));
@@ -142,9 +142,10 @@ public class TicTacToe implements ActionListener{
                             if(buttons[i].getText() == ""){
                                 buttons[i].setForeground(new Color(0, 0, 255));
                                 buttons[i].setText("O");
+                                num.remove(e.getSource());
                                 bot_turn = true;
                                 textfield.setText("X Turn");
-                                num.remove(i);
+                                
                                 check();
                             }
                     }
@@ -154,21 +155,18 @@ public class TicTacToe implements ActionListener{
         }
         
     }
-    int index = 9;
     public void runBot(){
-        int choice = num.get(random.nextInt(index)); 
+        int choice = num.get(random.nextInt(num.size())); 
         if(buttons[choice].getText() == ""){
             buttons[choice].setForeground(new Color(255, 0, 0));
             buttons[choice].setText("X");
             bot_turn = false;
             textfield.setText("O Turn");
+            num.remove(choice);
             check();
         } else if(buttons[choice].getText() == "X" || buttons[choice].getText() == "O"){
-            num.remove(choice);
-            index --;
             runBot();
         }
-        num.remove(choice);
     }
 
 
@@ -266,7 +264,6 @@ public class TicTacToe implements ActionListener{
             buttons[i].setEnabled(false);
         }
         textfield.setText("X Wins");
-
     }
 
     public void oWins(int a, int b, int c){
@@ -278,6 +275,7 @@ public class TicTacToe implements ActionListener{
             buttons[i].setEnabled(false);
         }
         textfield.setText("O Wins");
+
         
     }
 
@@ -298,7 +296,7 @@ public class TicTacToe implements ActionListener{
                 letter = "X";
             } else {
                 ErrorDialog();
-                System.exit(0); 
+                start();
             }
 
         
@@ -314,7 +312,7 @@ public class TicTacToe implements ActionListener{
 
         } else {
             ErrorDialog();
-            System.exit(0);
+            start();
         }
 
     }
@@ -326,6 +324,7 @@ public class TicTacToe implements ActionListener{
         JOptionPane.showMessageDialog(new JFrame(), message, "Dialog",
             JOptionPane.ERROR_MESSAGE);
       }
+
 
 
 }
